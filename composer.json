@@ -1,11 +1,11 @@
 {
 	"name" : "wangrunxinyes/yii2-wrx-oauth2-client",
-	"description" : "Yii2 AuthClient for The Shotbow Network",
+	"description" : "Yii2 OAuth Client For wangrunxin.com",
 	"minimum-stability" : "stable",
 	"license" : "MIT",
 	"authors" : [{
-			"name" : "Navarr Barnier",
-			"email" : "me@navarr.me"
+			"name" : "WANG Runxin",
+			"email" : "wangunxinyes@gmail.com"
 		}
 	],
 	"require" : {
@@ -14,7 +14,7 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Shotbow\\Auth\\" : "src/"
+			"wangrunxinyes\\OAuth\\" : "src/"
 		}
 	}
 }
