@@ -1,6 +1,6 @@
 <?php
 
-namespace wangrunxinyes\OAuth;
+namespace wangrunxinyes\OAuth\models;
 
 /**
  * Class User.

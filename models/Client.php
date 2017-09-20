@@ -1,6 +1,6 @@
 <?php
 
-namespace wangrunxinyes\OAuth;
+namespace wangrunxinyes\OAuth\models;
 
 use Yii;
 use yii\authclient\OAuth2;
@@ -10,17 +10,17 @@ class Client extends OAuth2 {
 	 *
 	 * {@inheritdoc}
 	 */
-	public $authUrl = 'https://wangrunxin.com/oauth/api/authorize';
+	public $authUrl = 'https://wangrunxin.com/oauth/api/authorize.js';
 	/**
 	 *
 	 * {@inheritdoc}
 	 */
-	public $tokenUrl = 'https://wangrunxin.com/oauth/api/access_token';
+	public $tokenUrl = 'https://wangrunxin.com/oauth/api/access_token.js';
 	/**
 	 *
 	 * {@inheritdoc}
 	 */
-	public $apiBaseUrl = 'https://wangrunxin.com/oauth/api/oauth2';
+	public $apiBaseUrl = 'https://wangrunxin.com/oauth/api/oauth2.js';
 	
 	/**
 	 *
@@ -50,7 +50,7 @@ class Client extends OAuth2 {
 	 */
 	public function getReturnUrl() {
 		return Yii::$app->urlManager->createAbsoluteUrl ( [ 
-				'/wrx/oauth/call-back',
+				'/wrx/oauth/auth',
 				'authclient' => 'wrxauth' 
 		] );
 	}

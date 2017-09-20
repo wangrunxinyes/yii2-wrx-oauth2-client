@@ -1,6 +1,8 @@
 <?php 
 namespace wangrunxinyes\OAuth\controllers;
 
+use yii\authclient\AuthAction;
+
 class OauthController extends \yii\base\Controller
 {
     public function actions()
