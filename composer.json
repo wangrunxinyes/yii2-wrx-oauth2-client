@@ -1,6 +1,6 @@
 {
 	"name" : "wangrunxinyes/yii2-wrx-oauth2-client",
-	"description" : "Yii2 OAuth Client For wangrunxin.com",
+	"description" : "Yii2 OAuth Client For wangrunxin.com, ver 1.0.",
 	"minimum-stability" : "stable",
 	"license" : "MIT",
 	"authors" : [{
