@@ -37,19 +37,6 @@ class Client extends OAuth2 {
 	 * {@inheritdoc}
 	 *
 	 */
-	public function buildAuthUrl(array $params = []) {
-		$state = \Yii::$app->security->generateRandomString(32);
-		$this->setState('authState', $state);
-		return parent::buildAuthUrl ( array_merge ( [
-				'state' => $state
-		], $params ) );
-	}
-	
-	/**
-	 *
-	 * {@inheritdoc}
-	 *
-	 */
 	public function getReturnUrl() {
 		return Yii::$app->urlManager->createAbsoluteUrl ( [ 
 				'/wrx/oauth/auth',
