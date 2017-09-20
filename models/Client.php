@@ -15,12 +15,12 @@ class Client extends OAuth2 {
 	 *
 	 * {@inheritdoc}
 	 */
-	public $tokenUrl = 'https://wangrunxin.com/oauth/api/access_token.js';
+	public $tokenUrl = 'https://wangrunxin.com/oauth/token/access-token.js';
 	/**
 	 *
 	 * {@inheritdoc}
 	 */
-	public $apiBaseUrl = 'https://wangrunxin.com/oauth/api/oauth2.js';
+	public $apiBaseUrl = 'https://wangrunxin.com/oauth/api/oauth.js';
 	
 	/**
 	 *
