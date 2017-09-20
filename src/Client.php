@@ -50,7 +50,7 @@ class Client extends OAuth2 {
 	 */
 	public function getReturnUrl() {
 		return Yii::$app->urlManager->createAbsoluteUrl ( [ 
-				'/api/oauth/call-back',
+				'/wrx/oauth/call-back',
 				'authclient' => 'wrxauth' 
 		] );
 	}
