@@ -20,7 +20,7 @@ class Client extends OAuth2 {
 	 *
 	 * {@inheritdoc}
 	 */
-	public $apiBaseUrl = 'https://wangrunxin.com/oauth/api/oauth.js';
+	public $apiBaseUrl = 'https://wangrunxin.com/oauth/api';
 	
 	/**
 	 *
@@ -29,7 +29,7 @@ class Client extends OAuth2 {
 	 * @return User
 	 */
 	protected function initUserAttributes() {
-		return new User ( $this->api ( 'me' ) );
+		return new User ( $this->api ( 'user.js' ) );
 	}
 	
 	/**
