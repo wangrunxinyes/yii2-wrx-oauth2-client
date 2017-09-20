@@ -38,8 +38,10 @@ class Client extends OAuth2 {
 	 *
 	 */
 	public function buildAuthUrl(array $params = []) {
-		return parent::buildAuthUrl ( array_merge ( [ 
-				'state' => 'ignored' 
+		$state = \Yii::$app->security->generateRandomString(32);
+		$this->setState('authState', $state);
+		return parent::buildAuthUrl ( array_merge ( [
+				'state' => $state
 		], $params ) );
 	}
 	
