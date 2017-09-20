@@ -1,0 +1,20 @@
+{
+	"name" : "wangrunxinyes/yii2-wrx-oauth2-client",
+	"description" : "Yii2 AuthClient for The Shotbow Network",
+	"minimum-stability" : "stable",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Navarr Barnier",
+			"email" : "me@navarr.me"
+		}
+	],
+	"require" : {
+		"php" : ">=5.4",
+		"yiisoft/yii2-authclient" : "~2.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Shotbow\\Auth\\" : "src/"
+		}
+	}
+}
