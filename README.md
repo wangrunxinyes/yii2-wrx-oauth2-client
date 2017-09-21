@@ -1,1 +1,1 @@
-WRX OAuth Client 2.5 For WANGRUNXIN.COM
+WRX OAuth Client 2.6 For WANGRUNXIN.COM

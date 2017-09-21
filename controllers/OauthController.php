@@ -1,15 +1,13 @@
 <?php 
 namespace wangrunxinyes\OAuth\controllers;
 
-use yii\authclient\AuthAction;
-
 class OauthController extends \yii\base\Controller
 {
     public function actions()
     {
         return [
             'auth' => [
-                'class' => 'yii\authclient\AuthAction',
+                'class' => 'wangrunxinyes\OAuth\models\OAuthAction',
                 'successCallback' => [$this, 'successCallback'],
             ],
         ];

@@ -27,29 +27,6 @@ class security_utils extends Model{
 		return $config;
 	}
 	
-	public static function checkSignedStr($config, $mixKey){	
-		$code = '';
-		$json_key = security_str_utils::safeDecrypt($config ['keys']);
-	
-		$passedSignature = $config ['signature'];
-		unset ( $config ['signature'] );
-	
-		// create config with signature;
-		ksort ( $config );
-		$keys = json_decode ( $json_key, true );
-		foreach ( $config as $key => $value ) {
-			if (in_array ( $key, $keys ))
-				$code .= $key . '=' . $value . '&';
-		}
-		$code = substr ( $code, 0, strlen ( $code ) - 1 );
-		$signature = sha1 ( $code . $json_key. $mixKey );
-		if ($signature === $passedSignature) {
-			return true;
-		}
-	
-		return false;
-	}
-	
 	public static function createNonceStr($length = 16) {
 		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		$str = "";
@@ -69,18 +46,6 @@ class security_utils extends Model{
 	public static function safeEncrypt($message)
 	{
 		return Crypto::encrypt($message, Key::loadFromAsciiSafeString(self::public_key));
-	}
-	
-	/**
-	 * Decrypt a message
-	 *
-	 * @param string $encrypted - message encrypted with safeEncrypt()
-	 * @param string $key - encryption key
-	 * @return string
-	 */
-	public static function safeDecrypt($encrypted)
-	{
-		return Crypto::decrypt($encrypted, Key::loadFromAsciiSafeString(self::public_key));
 	}
 }
 
