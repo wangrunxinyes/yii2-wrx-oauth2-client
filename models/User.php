@@ -15,7 +15,6 @@ use yii\base\UnknownPropertyException;
  * @property string open_id
  * @property string client_user_id
  * @property string access_token
- * @property string refresh_token
  * @property integer expires_at
  */
 class User extends ActiveRecord {

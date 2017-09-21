@@ -24,9 +24,7 @@ class m141208_201480_oauth_init extends Migration
             	'extensions' => Schema::TYPE_TEXT,
             	'open_id' => Schema::TYPE_STRING.' NOT NULL',
             	'client_user_id' => Schema::TYPE_INTEGER,
-            	'access_token' => Schema::TYPE_STRING . ' NOT NULL',
-            	'refresh_token' => Schema::TYPE_STRING . ' NOT NULL',
-            	'expires_at' => Schema::TYPE_INTEGER.' NOT NULL',
+            	'access_token' => Schema::TYPE_TEXT. ' NOT NULL',
             ],
             $tableOptions
         );
