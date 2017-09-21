@@ -58,6 +58,10 @@ class User extends ActiveRecord {
     	}
     }
     
+    public function getAccesstoken(){
+    	return unserialize($this->access_token);
+    }
+    
     public function setToExtensions($name, $value){
     	$data = json_decode($this->extensions, true);
     	if(!is_array($data)){
