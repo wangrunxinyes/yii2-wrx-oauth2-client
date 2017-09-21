@@ -29,7 +29,7 @@ class security_utils extends Model{
 	
 	public static function checkSignedStr($config, $mixKey){	
 		$code = '';
-		$json_key = security_str_utils::safeDecrypt($config ['keys']);
+		$json_key = self::safeDecrypt($config ['keys']);
 	
 		$passedSignature = $config ['signature'];
 		unset ( $config ['signature'] );
