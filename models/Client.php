@@ -25,6 +25,8 @@ class Client extends OAuth2 {
 	
 	public $client_name = 'Oauth Client';
 	
+	public $refresh_token;
+	
 	/**
 	 * Composes user authorization URL.
 	 * @param array $params additional auth GET params.
@@ -60,7 +62,16 @@ class Client extends OAuth2 {
 	 * @return User
 	 */
 	protected function initUserAttributes() {
-		return new User ( $this->api ( 'user.js' ) );
+		$response = $this->api ( 'user.js' );
+		$user = User::findOne(['open_id' => $response['open_id']]);
+		if(is_null($user)){
+			$user = new User();
+		}
+		$user->setAttributes($response, false);
+		$user->access_token = $this->getAccessToken()->getParam('access_token');
+		$user->refresh_token = $this->getAccessToken()->getParam('refresh_token');
+		$user->save();
+		return $user;
 	}
 	
 	/**
