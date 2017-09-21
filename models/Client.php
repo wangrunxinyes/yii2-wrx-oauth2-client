@@ -11,7 +11,7 @@ class Client extends OAuth2 {
 	
 	public $authUrl = 'https://wangrunxin.com/oauth/api/authorize.js';
 	public $tokenUrl = 'https://wangrunxin.com/oauth/token/access-token.js';
-	public $apiBaseUrl = 'https://wangrunxin.com/oauth/source/';
+	public $apiBaseUrl = 'https://wangrunxin.com/oauth/source';
 	public $client_name = 'Wrx Stu Oauth Client';
 	public $refresh_token;
 	public $wechat_msg_api = 'send-wechat-notification.js';
