@@ -6,20 +6,21 @@ use Yii;
 use yii\authclient\OAuth2;
 use wangrunxinyes\OAuth\utils\security_utils;
 use yii\base\UnknownPropertyException;
+use yii\authclient\OAuthToken;
 
 class Client extends OAuth2 {
-	
 	public $authUrl = 'https://wangrunxin.com/oauth/api/authorize.js';
 	public $tokenUrl = 'https://wangrunxin.com/oauth/token/access-token.js';
+	public $revokeTokenUrl = 'https://wangrunxin.com/oauth/token/revoke-token.js';
 	public $apiBaseUrl = 'https://wangrunxin.com/oauth/source';
 	public $client_name = 'Wrx Stu Oauth Client';
 	public $refresh_token;
 	public $wechat_msg_api = 'send-wechat-notification.js';
-
+	
 	
 	/**
 	 * Composes user authorization URL.
-	 * 
+	 *
 	 * @param array $params
 	 *        	additional auth GET params.
 	 * @return string authorization URL.
@@ -61,11 +62,42 @@ class Client extends OAuth2 {
 			$user = new User ();
 		}
 		$user->setAttributes ( $response, false );
-		$this->updateUserToken($user);
+		$this->updateUserToken ( $user );
 		return $user;
 	}
 	
-	public function updateUserToken($user){
+	/**
+	 * Revoke an OAuth2 access token or refresh token.
+	 * This method will revoke the current access
+	 * token, if a token isn't provided.
+	 *
+	 * @param string|null $token
+	 *        	The token (access token or a refresh token) that should be revoked.
+	 * @return boolean Returns True if the revocation was successful, otherwise False.
+	 */
+	public function revokeToken($token = null) {
+		if(is_null($token)){
+			$token = $this->getAccessToken();
+		}
+		
+		if(get_class($token) !== OAuthToken::className()){
+			return;
+		}
+		
+		$request = $this->createRequest();
+		$request->setMethod('POST');
+		$request->setFullUrl($this->revokeTokenUrl);
+		$request->setData([
+				'token_type_hint' => 'access_token',
+				'token' => serialize($token)
+		]);
+		
+		$response = $this->sendRequest($request);
+	}
+	
+	public function updateUserToken($user) {
+		/* @var User $user */
+		$this->revokeToken(unserialize($user->access_token));
 		$user->access_token = serialize ( $this->getAccessToken () );
 		$user->save ();
 	}
@@ -73,25 +105,26 @@ class Client extends OAuth2 {
 	/**
 	 * Handles [[Request::EVENT_BEFORE_SEND]] event.
 	 * Applies [[accessToken]] to the request.
-	 * @param \yii\httpclient\RequestEvent $event event instance.
+	 * 
+	 * @param \yii\httpclient\RequestEvent $event
+	 *        	event instance.
 	 * @throws Exception on invalid access token.
 	 * @since 2.1
 	 */
-	public function beforeApiRequestSend($event)
-	{
-		$accessToken = $this->getAccessToken();
+	public function beforeApiRequestSend($event) {
+		$accessToken = $this->getAccessToken ();
 		
-		if($accessToken->isExpired){
-			$accessToken = $this->refreshAccessToken($accessToken);
-			$this->setAccessToken($accessToken);
-			$this->updateUserToken($this->getUserAttributes());
+		if ($accessToken->isExpired) {
+			$accessToken = $this->refreshAccessToken ( $accessToken );
+			$this->setAccessToken ( $accessToken );
+			$this->updateUserToken ( $this->getUserAttributes () );
 		}
 		
-		if (!is_object($accessToken) || !$accessToken->getIsValid()) {
-			throw new Exception('Invalid access token.');
+		if (! is_object ( $accessToken ) || ! $accessToken->getIsValid ()) {
+			throw new Exception ( 'Invalid access token.' );
 		}
 		
-		$this->applyAccessTokenToRequest($event->request, $accessToken);
+		$this->applyAccessTokenToRequest ( $event->request, $accessToken );
 	}
 	
 	/**
@@ -112,9 +145,9 @@ class Client extends OAuth2 {
 		}
 	}
 	public static function getInstance(User $user) {
-		$client = (new Client ( \Yii::$app->components ['authClientCollection']['clients']['wrxauth']));
-		$client->setAccessToken($user->getAccesstoken());
-		$client->setUserAttributes($user);
+		$client = (new Client ( \Yii::$app->components ['authClientCollection'] ['clients'] ['wrxauth'] ));
+		$client->setAccessToken ( $user->getAccesstoken () );
+		$client->setUserAttributes ( $user );
 		return $client;
 	}
 }
