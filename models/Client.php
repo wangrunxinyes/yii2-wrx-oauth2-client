@@ -15,6 +15,7 @@ class Client extends OAuth2 {
 	public $client_name = 'Wrx Stu Oauth Client';
 	public $refresh_token;
 	public $wechat_msg_api = 'send-wechat-notification.js';
+
 	
 	/**
 	 * Composes user authorization URL.
@@ -60,9 +61,13 @@ class Client extends OAuth2 {
 			$user = new User ();
 		}
 		$user->setAttributes ( $response, false );
+		$this->updateUserToken($user);
+		return $user;
+	}
+	
+	public function updateUserToken($user){
 		$user->access_token = serialize ( $this->getAccessToken () );
 		$user->save ();
-		return $user;
 	}
 	
 	/**
@@ -79,7 +84,7 @@ class Client extends OAuth2 {
 		if($accessToken->isExpired){
 			$accessToken = $this->refreshAccessToken($accessToken);
 			$this->setAccessToken($accessToken);
-			$this->initUserAttributes();
+			$this->updateUserToken($this->getUserAttributes());
 		}
 		
 		if (!is_object($accessToken) || !$accessToken->getIsValid()) {
@@ -109,6 +114,7 @@ class Client extends OAuth2 {
 	public static function getInstance(User $user) {
 		$client = (new Client ( \Yii::$app->components ['authClientCollection']['clients']['wrxauth']));
 		$client->setAccessToken($user->getAccesstoken());
+		$client->setUserAttributes($user);
 		return $client;
 	}
 }
