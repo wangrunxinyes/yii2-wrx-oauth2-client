@@ -97,7 +97,6 @@ class Client extends OAuth2 {
 	
 	public function updateUserToken($user) {
 		/* @var User $user */
-		$this->revokeToken(unserialize($user->access_token));
 		$user->access_token = serialize ( $this->getAccessToken () );
 		$user->save ();
 	}
