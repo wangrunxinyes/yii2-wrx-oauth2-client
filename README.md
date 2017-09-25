@@ -30,8 +30,9 @@ To use this extension,  simply add the following code in your application config
         'wrx'  => [
             'class' => 'wangrunxinyes\OAuth\Module',
 			'controllerMap' => [
-			   //Overwrite OauthController and handle AuthSccuess for your own project.
-			   'oauth' => 'frontend\controllers\oauth\OauthController',
+			   //Overwrite OauthController and handle AuthSccuess for your own project;
+			   //Your OauthController should extend wangrunxinyes\OAuth\controllers\OauthController.
+			   'oauth' => 'Your own OauthController className',
 			],
 			'mixKey' => 'Your random code',
 		],
