@@ -28,27 +28,28 @@ To use this extension,  simply add the following code in your application config
 'modules'=>[
         //other modules .....
         'wrx'  => [
-                    'class' => 'wangrunxinyes\OAuth\Module',
-					'controllerMap' => [
-							'oauth' => 'frontend\controllers\oauth\OauthController',
-					],
-					'mixKey' => 'Your random code',
+            'class' => 'wangrunxinyes\OAuth\Module',
+			'controllerMap' => [
+			   'oauth' => 'frontend\controllers\oauth\OauthController',
 			],
-        ],
+			'mixKey' => 'Your random code',
+		],
+],
 'components' => [ 
         //other components .....
         'authClientCollection' => [
-					'class' => yii\authclient\Collection::class,
-					'clients' => [
-							'wrxauth' => [
-									'class' => wangrunxinyes\OAuth\models\Client::class,
-									'clientId' => 'Your client_id',
-									'clientSecret' => 'Your client_secret',
-									'scope' => '',
-							],
-					],
-			],
-		]
+            'class' => yii\authclient\Collection::class,
+                'clients' => [
+                    'wrxauth' => [
+                         'class' => wangrunxinyes\OAuth\models\Client::class,
+                         'clientId' => 'Your client_id',
+                         'clientSecret' => 'Your client_secret',
+                         'scope' => '',
+                    ],
+                ],
+            ],
+        ],
+],
 ```
 
 The next step your shold run migration
