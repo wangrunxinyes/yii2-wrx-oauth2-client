@@ -1,4 +1,4 @@
-WRX OAuth Client 3.1 For WANGRUNXIN.COM
+WRX OAuth Client 3.2 For WANGRUNXIN.COM
 ==================
 
 A wrapper for implementing an OAuth2 Server(https://www.wangrunxin.com)
