@@ -9,14 +9,14 @@ use yii\base\UnknownPropertyException;
 use yii\authclient\OAuthToken;
 
 class Client extends OAuth2 {
-	public $authUrl = 'https://wangrunxin.com/oauth/api/authorize.js';
-	public $tokenUrl = 'https://wangrunxin.com/oauth/token/access-token.js';
-	public $revokeTokenUrl = 'https://wangrunxin.com/oauth/token/revoke-token.js';
-	public $apiBaseUrl = 'https://wangrunxin.com/oauth/source';
+    CONST SERVER_DOMAIN = 'https://global.wangrunxin.com';
+    public $authUrl = CLIENT::SERVER_DOMAIN . '/oauth/api/authorize.js';
+    public $tokenUrl = CLIENT::SERVER_DOMAIN . '/oauth/token/access-token.js';
+    public $revokeTokenUrl = CLIENT::SERVER_DOMAIN . '/oauth/token/revoke-token.js';
+    public $apiBaseUrl = CLIENT::SERVER_DOMAIN . '/oauth/source';
 	public $client_name = 'Wrx Stu Oauth Client';
 	public $refresh_token;
 	public $wechat_msg_api = 'send-wechat-notification.js';
-	
 	
 	/**
 	 * Composes user authorization URL.
@@ -76,25 +76,24 @@ class Client extends OAuth2 {
 	 * @return boolean Returns True if the revocation was successful, otherwise False.
 	 */
 	public function revokeToken($token = null) {
-		if(is_null($token)){
-			$token = $this->getAccessToken();
+		if (is_null ( $token )) {
+			$token = $this->getAccessToken ();
 		}
 		
-		if(get_class($token) !== OAuthToken::className()){
+		if (get_class ( $token ) !== OAuthToken::className ()) {
 			return;
 		}
 		
-		$request = $this->createRequest();
-		$request->setMethod('POST');
-		$request->setFullUrl($this->revokeTokenUrl);
-		$request->setData([
+		$request = $this->createRequest ();
+		$request->setMethod ( 'POST' );
+		$request->setFullUrl ( $this->revokeTokenUrl );
+		$request->setData ( [ 
 				'token_type_hint' => 'access_token',
-				'token' => serialize($token)
-		]);
+				'token' => serialize ( $token ) 
+		] );
 		
-		$response = $this->sendRequest($request);
+		$response = $this->sendRequest ( $request );
 	}
-	
 	public function updateUserToken($user) {
 		/* @var User $user */
 		$user->access_token = serialize ( $this->getAccessToken () );
@@ -104,7 +103,7 @@ class Client extends OAuth2 {
 	/**
 	 * Handles [[Request::EVENT_BEFORE_SEND]] event.
 	 * Applies [[accessToken]] to the request.
-	 * 
+	 *
 	 * @param \yii\httpclient\RequestEvent $event
 	 *        	event instance.
 	 * @throws Exception on invalid access token.
@@ -113,14 +112,12 @@ class Client extends OAuth2 {
 	public function beforeApiRequestSend($event) {
 		$accessToken = $this->getAccessToken ();
 		
-		if ($accessToken->isExpired) {
-			$accessToken = $this->refreshAccessToken ( $accessToken );
-			$this->setAccessToken ( $accessToken );
-			$this->updateUserToken ( $this->getUserAttributes () );
+		if (! $accessToken->getIsValid ()) {
+			$this->revokeToken ( is_object ( $accessToken ) ? $accessToken : NULL );
 		}
 		
 		if (! is_object ( $accessToken ) || ! $accessToken->getIsValid ()) {
-			throw new Exception ( 'Invalid access token.' );
+			throw new \Exception ( 'Invalid access token.' );
 		}
 		
 		$this->applyAccessTokenToRequest ( $event->request, $accessToken );
