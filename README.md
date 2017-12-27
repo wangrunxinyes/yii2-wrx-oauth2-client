@@ -60,4 +60,10 @@ The next step your shold run migration
 yii migrate --migrationPath=@vendor/wangrunxinyes/yii2-wrx-oauth2-client/migrations
 ```
 
+Update through composer without dependencies: 
+
+```php
+composer --no-update require wangrunxinyes/yii2-wrx-oauth2-client:*
+```
+
 For more, see https://global.wangrunxin.com/oauth.js
