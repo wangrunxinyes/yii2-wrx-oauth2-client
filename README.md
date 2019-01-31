@@ -60,4 +60,4 @@ The next step your shold run migration
 yii migrate --migrationPath=@vendor/wangrunxinyes/yii2-wrx-oauth2-client/migrations
 ```
 
-For more, see https://global.wangrunxin.com/oauth.js
+For more, see https://www.wangrunxin.com/oauth.js
