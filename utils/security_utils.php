@@ -3,8 +3,6 @@
 namespace wangrunxinyes\OAuth\utils;
 
 use yii\base\Model;
-use Defuse\Crypto\Crypto;
-use Defuse\Crypto\Key;
 
 class security_utils extends Model{
 	const public_key = 'def00000a4b2383cdab0f7768daff6fcb9fe08306f61ef5fbbc671b61245f37a5bfe54a616473a6833eed215cc8979dd121f2224052f6a5128115cb0dbc8e49531a56dda';
@@ -68,7 +66,7 @@ class security_utils extends Model{
 	 */
 	public static function safeEncrypt($message)
 	{
-		return Crypto::encrypt($message, Key::loadFromAsciiSafeString(self::public_key));
+		return \Crypto::encrypt($message, self::public_key);
 	}
 	
 	/**
@@ -80,7 +78,7 @@ class security_utils extends Model{
 	 */
 	public static function safeDecrypt($encrypted)
 	{
-		return Crypto::decrypt($encrypted, Key::loadFromAsciiSafeString(self::public_key));
+		return \Crypto::decrypt($encrypted, self::public_key);
 	}
 }
 
