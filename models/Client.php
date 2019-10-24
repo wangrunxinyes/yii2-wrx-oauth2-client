@@ -9,7 +9,7 @@ use yii\base\UnknownPropertyException;
 use yii\authclient\OAuthToken;
 
 class Client extends OAuth2 {
-    CONST SERVER_DOMAIN = 'https://global.wangrunxin.com';
+    CONST SERVER_DOMAIN = 'https://www.wangrunxin.com';
     public $authUrl = CLIENT::SERVER_DOMAIN . '/oauth/api/authorize.js';
     public $tokenUrl = CLIENT::SERVER_DOMAIN . '/oauth/token/access-token.js';
     public $revokeTokenUrl = CLIENT::SERVER_DOMAIN . '/oauth/token/revoke-token.js';
@@ -45,6 +45,11 @@ class Client extends OAuth2 {
 		$auth_config = security_utils::createSignedStr ( array_merge ( $defaultParams, $params ), $this->clientSecret );
 		
 		return $this->composeUrl ( $this->authUrl, $auth_config );
+	}
+	
+	public function refreshUserAttributes() {
+	   $user = $this->initUserAttributes();
+	   $user->save(false);
 	}
 	
 	/**
